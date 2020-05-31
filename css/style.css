@@ -1,0 +1,126 @@
+.main {
+    max-width: 1180px;
+    margin: 0 auto;
+}
+
+.slide__container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    user-select: none;
+    overflow: hidden;
+}
+
+.slide__wrap {
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.slide__item {
+    width: 100%;
+    height: 100%;
+    flex: 0 0 auto;
+}
+
+.slide__item > a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    line-height: 0;
+}
+
+.slide__image {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.slide__image img {
+    max-width: 100%;
+}
+
+.slide__nav.hide {
+    display: none;
+}
+
+.slide__nav__btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 54px;
+    height: 54px;
+    border: 2px solid #fff;
+    border-radius: 100%;
+    transition: border-color 0.4s;
+    cursor: pointer;
+}
+
+.slide__nav__btn.hide {
+    display: none;
+}
+
+.slide__nav__btn:before {
+    content: "";
+    position: absolute;
+    display: inline-block;
+    top: 50%;
+    left: 50%;
+    width: 35%;
+    height: 35%;
+    border-top: 2px solid #fff;
+    border-right: 2px solid #fff;
+    transition: border-color 0.4s;
+}
+
+.slide__nav__btn:hover {
+    border-color: #000;
+}
+
+.slide__nav__btn:hover:before {
+    border-color: #000
+}
+
+.slide__nav__btn--next {
+    right: 20px;
+}
+
+.slide__nav__btn--next:before {
+    transform: translate(-75%, -50%) rotate(45deg);
+}
+
+.slide__nav__btn--prev {
+    left: 20px;
+}
+
+.slide__nav__btn--prev:before {
+    transform: translate(-25%, -50%) rotate(-135deg);
+}
+
+.slide__indicator {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-flow: row nowrap;
+    max-width: 90%;
+}
+
+.slide__indicator__item:nth-of-type(n+2) {
+    margin-left: 10px;
+}
+
+.slide__indicator__item {
+    width: 10px;
+    height: 10px;
+    background-color: #eee;
+    border-radius: 100%;
+    opacity: 0.6;
+    cursor: pointer;
+}
+
+.slide__indicator__item.active {
+    background-color: #fff;
+    opacity: 1;
+}
