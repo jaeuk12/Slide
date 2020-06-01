@@ -435,7 +435,12 @@ function changeImageType() {
     for (let i = 0; i < images.length; i += 1) {
         const item = images[i];
         const img = item.querySelector("img");
-        img.src = img.getAttribute(this._isMobile ? "data-mobile" : "data-desktop");
+        img.hasAttribute("data-mobile");
+        if (this._isMobile && img.hasAttribute("data-mobile")) {
+            img.src = img.getAttribute("data-mobile");
+        } else {
+            img.src = img.getAttribute("data-desktop");
+        }
     }
 }
 
@@ -466,8 +471,13 @@ function onTouchEndSlide(e) {
             moveSlideNext.call(this, e);
         }
     } else if (Math.abs(posX) > std) {
-        const moveIndex = Math.abs(Math.round(posX / width));
-        moveSlide.call(this, moveIndex);
+        const moveIndex = Math.round(posX / width);
+
+        if (moveIndex > 0) {
+            moveSlidePrev.call(this, e);
+        } else {
+            moveSlideNext.call(this, e);
+        }
     } else {
         moveSlide.call(this, this._index);
     }
@@ -488,10 +498,24 @@ function onTouchMoveSlide(e) {
         const posX = x - this._touchX;
         const px = posX + -max;
 
-        if ((!this._options.loop && px > 0) || (!this._options.loop && Math.abs(px) > (width * (this._count - 1)) - 1)) {
-            this._touchX = x;
+        if (this._options.infinity) {
+            if (px > 0) {
+                const gap = ((this._count - this._real_count) / 2) + 1
+                moveSlide.call(this, this._count - gap, false);
+                this._index = this._count - gap;
+            } else if (Math.abs(px) > (width * (this._count - 1)) - 1) {
+                const gap = (this._count - this._real_count) / 2
+                moveSlide.call(this, this._real_index + gap, false);
+                this._index = this._real_index + gap;
+            } else {
+                this._wrap.style.transform = "translate3d(" + px + "px, 0px, 0px)";
+            }
         } else {
-            this._wrap.style.transform = "translate3d(" + px + "px, 0px, 0px)";
+            if (px > 0 || Math.abs(px) > (width * (this._count - 1)) - 1) {
+                this._touchX = x;
+            } else {
+                this._wrap.style.transform = "translate3d(" + px + "px, 0px, 0px)";
+            }
         }
     }
 }
